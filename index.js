@@ -1,5 +1,5 @@
 
-let getComputerChoice = function(){
+let getComputerChoice = () =>{
     let num = Math.floor(Math.random() * 3);
     switch(num){
         case 0: return 'Rock';
@@ -9,46 +9,63 @@ let getComputerChoice = function(){
 }
 
 let round = (playerSelection,computerSelection)=>{
+    console.log('Player Chose : ' + playerSelection + ' And Computer Chose : ' + computerSelection)
     playerSelection = playerSelection.toLowerCase();
     computerSelection = computerSelection.toLowerCase();
 
     if (playerSelection === computerSelection)
-    return "Its A Draw";
+    return 0;
     if (playerSelection === 'rock' && computerSelection ==='scissors')
-    return 'You Win !';
+    return 1;
     else if (playerSelection === 'paper' && computerSelection ==='rock')
-    return 'You Win !';
+    return 1;
     else if (playerSelection ==='scissors' && computerSelection==='paper')
-    return 'You Win !';
+    return 1;
 
-    return 'You Lose!';
+    return 2;
 }
 
-let game = ()=>{
-    let scoreHuman = 0;
-    let scoreComputer = 0;
 
-    for (let i =0 ; i < 5 ; i++)
-    {
-        let input = prompt("Choose Rock/Paper/Scissors");
-        let compDec = getComputerChoice();
-        console.log("Computer Dec : " + compDec +"User Dec : " + input)
+const buttons = document.querySelectorAll('.choice');
+
+
+buttons.forEach(button => {
+    button.addEventListener('click', e=>{
+        let roundOfGame = round(button.textContent,getComputerChoice());
+        const userSpan = document.querySelector('#user-score');
+        const computerSpan = document.querySelector('#computer-score');
+
+        if (roundOfGame === 1)
+        {
+            userSpan.textContent = (Number(userSpan.textContent)+1).toString();
+        }
+        else if (roundOfGame === 2)
+        {   
+            computerSpan.textContent = (Number(computerSpan.textContent)+1).toString();
+        }
+        else
+            return;
+
+
+        if ( Number(computerSpan.textContent) === 5 )
+        {
+            console.log('Computer Wins ! ');
+        }
+        if (Number(userSpan.textContent) === 5)
+        {
+            console.log('You Win ! ');
+
+        }
         
-        let result = round(input,compDec);
-        if (result === 'You Win !')
-            scoreHuman++;
-        else if ( result === 'You Lose!')
-        scoreComputer++;
-    }
+        e.stopPropagation()
+    })
+});
 
-    if (scoreComputer === scoreHuman){
-    console.log('It\'s a draw!');
-    return;
-    }
-
-    scoreHuman >= scoreComputer ?  console.log('You Won it all !') : console.log('You Lost!');
-
-}
-
-
-game()
+const restartButton = document.querySelector('.restart');
+restartButton.addEventListener('click', e => {
+    const userSpan = document.querySelector('#user-score');
+    const computerSpan = document.querySelector('#computer-score');
+    computerSpan.textContent = "0";
+    userSpan.textContent = "0";
+    e.stopPropagation();
+});

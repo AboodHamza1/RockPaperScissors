@@ -5,9 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="index.js"></script>
+    <script src="index.js" defer></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
+    <div class="select-option">
+        <h1>Choose One Of The Following</h1>
+        <button class="choice">Rock</button>
+        <button class="choice">Paper</button>
+        <button class="choice">Scissors</button>
+    </div>
+    <div class="hold-score">
+        <h1>
+            Your Score : <span id="user-score">0</span>
+        </h1>
+        <h1> Computer Score : <span id="computer-score">0</span></h1>
+        <button class="restart">Restart</button>
+    </div>
 </body>
 </html>
